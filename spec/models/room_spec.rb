@@ -44,4 +44,29 @@ RSpec.describe Room, type: :model do
       expect(Room.order_by_price).to match_array [room1, room2, room3]
     end
   end
+
+  describe "association with user" do
+    let(:user) { create :user }
+
+    it "belongs to a user" do
+      room = user.rooms.new(home_type: "Shared")
+
+      expect(room.user).to eq(user)
+    end
+  end
+
+  describe "association with theme" do
+    let(:user) { create :user }
+    let(:room) { create :room, user: user }
+
+    let(:theme1) { create :theme, name: "Bright", rooms: [room] }
+    let(:theme2) { create :theme, name: "Clean lines", rooms: [room] }
+    let(:theme3) { create :theme, name: "A Man's Touch", rooms: [room] }
+
+    it "has themes" do
+      expect(room.themes).to include(theme1)
+      expect(room.themes).to include(theme2)
+      expect(room.themes).to include(theme3)
+    end
+  end
 end
