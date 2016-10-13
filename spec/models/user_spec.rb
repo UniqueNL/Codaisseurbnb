@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe "association with room" do
     let(:user) { create :user }
-    let!(:room) { create :room, user: :user }
+    let(:profile) { create :profile, user: user}
+    let!(:room) { create :room, user: user }
 
     it "has many rooms" do
       room1 = user.rooms.new(listing_name: "Wonderful")
@@ -16,5 +17,10 @@ RSpec.describe User, type: :model do
     it "deletes associated rooms" do
       expect { user.destroy }.to change(Room, :count).by(-1)
     end
+
+    it "check profile at user" do
+      expect(user).to have_content(profile)
+    end
+
   end
 end
