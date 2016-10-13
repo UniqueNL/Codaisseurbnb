@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011141811) do
+ActiveRecord::Schema.define(version: 20161013095020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "photos", force: :cascade do |t|
+    t.integer  "room_id"
+    t.string   "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_photos_on_room_id", using: :btree
+  end
 
   create_table "profiles", force: :cascade do |t|
     t.string   "first_name"
@@ -22,7 +30,6 @@ ActiveRecord::Schema.define(version: 20161011141811) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.belongs_to :user
     t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
   end
 
@@ -78,6 +85,7 @@ ActiveRecord::Schema.define(version: 20161011141811) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "photos", "rooms"
   add_foreign_key "profiles", "users"
   add_foreign_key "rooms", "users"
 end

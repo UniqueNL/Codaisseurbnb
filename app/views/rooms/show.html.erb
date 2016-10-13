@@ -34,6 +34,10 @@
         <span class="label label-success"><%= theme.name %></span>
     <% end %>
 
+    <h4>Photos</h4>
+    <% @room.photos.each do |photo| %>
+      <%= image_tag photo.image %>
+    <% end %>
 
   </div>
 
