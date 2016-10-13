@@ -36,7 +36,7 @@
 
     <h4>Photos</h4>
     <% @room.photos.each do |photo| %>
-      <%= image_tag photo.image %>
+      <%= image_tag photo.image.thumbnail %>
     <% end %>
 
   </div>
